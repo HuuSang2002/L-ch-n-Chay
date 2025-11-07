@@ -157,31 +157,43 @@
       resultIcon.innerHTML = '<i class="fas fa-utensils"></i>';
       resultEl.classList.add("man");
     }
+// Tạo lịch
+      function createCalendar() {
+        const calendarEl = document.getElementById("calendar");
+        calendarEl.innerHTML = '';
 
-    // Tạo lịch
-    function createCalendar() {
-      const calendarEl = document.getElementById("calendar");
-      calendarEl.innerHTML = '';
-      
-      // Tạo các ngày trong tháng
-      for (let i = 1; i <= lunarMonthDaysAccurate; i++) {
-        const dayEl = document.createElement("div");
-        dayEl.className = "calendar-day";
-        dayEl.textContent = i;
-        
-        // Kiểm tra nếu là ngày chay
-        if (ngayChay.includes(i)) {
-          dayEl.classList.add("chay-day");
+        // Tìm ngày đầu tháng âm
+        const firstDayOfMonth = new Date(monthStartSolar);
+
+        // Tìm thứ của ngày đầu tháng (0 = Chủ Nhật, 1 = Thứ 2, ...)
+        let firstWeekday = firstDayOfMonth.getDay();
+
+        // Thêm các ô trống cho những ngày trước ngày đầu tháng
+        for (let i = 0; i < firstWeekday; i++) {
+          const emptyDay = document.createElement("div");
+          emptyDay.className = "calendar-day empty";
+          calendarEl.appendChild(emptyDay);
         }
-        
-        // Kiểm tra nếu là hôm nay
-        if (i === ngayAm) {
-          dayEl.classList.add("today");
+
+        // Tạo các ngày trong tháng
+        for (let i = 1; i <= lunarMonthDaysAccurate; i++) {
+          const dayEl = document.createElement("div");
+          dayEl.className = "calendar-day";
+          dayEl.textContent = i;
+
+          // Kiểm tra nếu là ngày chay
+          if (ngayChay.includes(i)) {
+            dayEl.classList.add("chay-day");
+          }
+
+          // Kiểm tra nếu là hôm nay
+          if (i === ngayAm) {
+            dayEl.classList.add("today");
+          }
+
+          calendarEl.appendChild(dayEl);
         }
-        
-        calendarEl.appendChild(dayEl);
       }
-    }
-    
-    // Gọi hàm tạo lịch
-    createCalendar();
+
+      // Gọi hàm tạo lịch
+      createCalendar();
